@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet reg form</title>
+    <link rel="stylesheet" href="reg.css">
+</head>
+<body>
+    
+<form name="submit-to-google-sheet">
+    <div class="container">  
+        <div class="ahead">Register here</div>
+        <input type="text"  placeholder=" First Name" name="fname"  required><br/>
+        <input type="text"  placeholder=" Last Name" name="lname" required><br/>
+        <input type="text"  placeholder="Address" name="addr" required><br/>
+        <input type="tel"  placeholder="Phone Number" name="phon"  minlength="10" maxlength="10" required><br/>
+        <input type="email"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" name="emai" placeholder="Email"  size="20" required><br/>
+
+
+
+
+        <select name="type"  required>
+          <option value="">Select the Pet Type</option>
+           <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Bird">Bird</option>
+         
+      </select><br/>
+
+        <input type="text"  placeholder="Pet name" name="pnam" required><br/>
+        <input type="text"  name="birthday" placeholder="Pet's Date of Birth" onfocus="(this.type='date')" required><br/>
+        <input type="text"  placeholder="Pet's Breed" name="pbreeds" required><br/>
+
+
+        <button  type="submit"  name="submit"> SAVE </button><br>
+        <span id="success"></span>
+
+        </div>
+
+        </form>
+        <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwsMPkmoYwEiRuWt2r1iA0P693-sa4WkpJcRD3cVA-ofSW5Y9RF24vMFZ_LUMn49MlC/exec'
+            const form = document.forms['submit-to-google-sheet']
+            const success=document.getElementById('success');
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    success.innerHTML="Data saved Successfully";
+                    setTimeout(function()
+                    {
+                        success.innerHTML="";  
+                    },3000)
+                    form.reset();
+    
+    
+                })
+                .catch(error => console.error('Error!', error.message))
+            })
+          </script>
+
+</body>
+</html>
